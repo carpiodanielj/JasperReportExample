@@ -40,27 +40,36 @@ public class JasperReportExample {
         /* Create Items */
         Item iPhone = new Item();
 //            iPhone.setName("iPhone 6S");
-        iPhone.setPrice(65000.00);
-        iPhone.setItemNo("100");
-        iPhone.setProductName("Es un iphone");
-        iPhone.setQty(23);
-        iPhone.setLineTotal(223.12);
+//        iPhone.setPrice(65000.00);
+        iPhone.setCodigo("100");
+        iPhone.setCant(23);
+        iPhone.setUnid("UND");
+        iPhone.setDescProducto("Es un iphone");
+        iPhone.setValUnit(223.12);
+        iPhone.setDscto(223.12);
+        iPhone.setValVenta(223.12);
 
         Item iPad = new Item();
 //            iPad.setName("iPad Pro");
-        iPad.setPrice(70000.00);
-        iPad.setItemNo("200");
-        iPad.setProductName("Es un ipad");
-        iPad.setQty(34);
-        iPad.setLineTotal(455.90);
+//        iPad.setPrice(70000.00);
+        iPad.setCodigo("200");
+        iPad.setCant(23);
+        iPad.setUnid("UND");
+        iPad.setDescProducto("Es un ipad");
+        iPad.setValUnit(223.12);
+        iPad.setDscto(223.12);
+        iPad.setValVenta(223.12);
 
         Item samsung = new Item();
 //            iPad.setName("iPad Pro");
-        samsung.setPrice(70000.00);
-        samsung.setItemNo("200");
-        samsung.setProductName("Es un samsung");
-        samsung.setQty(45);
-        samsung.setLineTotal(87.18);
+//        samsung.setPrice(70000.00);
+        samsung.setCodigo("300");
+        samsung.setCant(23);
+        samsung.setUnid("UND");
+        samsung.setDescProducto("Es un samsung");
+        samsung.setValUnit(223.12);
+        samsung.setDscto(223.12);
+        samsung.setValVenta(223.12);
 
         /* Add Items to List */
         listItems.add(iPhone);
@@ -72,13 +81,12 @@ public class JasperReportExample {
 
         
         try {
-            // Inicializamos los valores
-            double amount = 102.15;
             // Inicializamos los parametros a enviar
-            Map parameters = new HashMap();
-            parameters.put("customerName", "PARACAS");
-            parameters.put("customerEmail", "rrhh@paracas.com.pe");
-            parameters.put("invoiceAmount", amount);
+            Map parameters = getParameters();
+//            Map parameters = new HashMap();
+//            parameters.put("customerName", "PARACAS");
+//            parameters.put("customerEmail", "rrhh@paracas.com.pe");
+//            parameters.put("invoiceAmount", amount);
 //            JasperReport report = JasperCompileManager.compileReport(
 //                    "C:\\Users\\USUARIO\\Documents\\reporte1.jrxml");
             JasperReport report = (JasperReport) JRLoader.loadObject(reporteFile);
@@ -91,6 +99,36 @@ public class JasperReportExample {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    static Map getParameters() {
+        // Inicializamos los valores
+        double amount = 102.15;
+        // Inicializamos los parametros a enviar
+        Map parameters = new HashMap();
+        parameters.put("customerName", "PARACAS");
+        parameters.put("customerEmail", "rrhh@paracas.com.pe");
+        parameters.put("invoiceAmount", amount);
+        // Datos Cliente
+        parameters.put("nomCliente", "TERMINAL PORTUARIO PARACAS");
+        parameters.put("rucCliente", "10451004569");
+        parameters.put("direccionCliente", "AV. BENAVIDES 565");
+        parameters.put("ciudadCliente", "MIRAFLORES - LIMA - LIMA");
+        parameters.put("descMoneda", "SOLES");
+        parameters.put("igv", "18%");
+        // Datos Factura
+        parameters.put("numFactura", "F001-00008567");
+        parameters.put("fechaEmision", "17-Feb-2022");
+        parameters.put("formaPago", "Credito");
+        parameters.put("numOrdenCompra", "0010000000094855");
+        parameters.put("fechaVencimiento", "02-Abr-2022");
+        parameters.put("numGuiaRemision", "");
+        // Datos Proveedor
+        parameters.put("nomProveedor", "INTERNATIONAL PRIVATE SECURITY");
+        parameters.put("rucProveedor", "10456798355");
+        parameters.put("direccionProveedor", "CALLE RODOLFO BELTRAN");
+        parameters.put("ciudadProveedor", "COMAS - LIMA - LIMA");
+        return parameters;
     }
 
 }
