@@ -4,6 +4,7 @@
  */
 package jasperreportexample;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,12 @@ public class JasperReportExample {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Hello World...");
+        
+        exampleTable();
+    }
+    
+    private static void exampleMain() {
+        // TODO code application logic here
         
         String reporteFile = "C:\\Users\\USUARIO\\Documents\\reporte-pdp-osl.jasper";
         String reportePdf = "C:\\Users\\USUARIO\\Documents\\reporte-pdp-osl.pdf";
@@ -89,7 +96,7 @@ public class JasperReportExample {
 //            parameters.put("invoiceAmount", amount);
 //            JasperReport report = JasperCompileManager.compileReport(
 //                    "C:\\Users\\USUARIO\\Documents\\reporte1.jrxml");
-            JasperReport report = (JasperReport) JRLoader.loadObject(reporteFile);
+            JasperReport report = (JasperReport) JRLoader.loadObject(new File(reporteFile));
 //            JasperPrint print = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
             JasperPrint print = JasperFillManager.fillReport(report, parameters, itemsJRBean);
             // Exporta el informe a PDF
@@ -129,6 +136,49 @@ public class JasperReportExample {
         parameters.put("direccionProveedor", "CALLE RODOLFO BELTRAN");
         parameters.put("ciudadProveedor", "COMAS - LIMA - LIMA");
         return parameters;
+    }
+    
+    private static void exampleTable() {
+        
+        String reporteFile = "C:\\Users\\USUARIO\\Documents\\NetBeansProjects\\JasperReportExample\\src\\jasperreportexample\\templates\\report1.jasper";
+        String reportePdf = "C:\\Users\\USUARIO\\Documents\\NetBeansProjects\\JasperReportExample\\src\\jasperreportexample\\templates\\report1.pdf";
+                
+        /* List to hold Items */
+        List<Article> listItems = new ArrayList<>();
+
+        Article samsung = new Article();
+        samsung.setName("iPad Pro");
+        samsung.setCodigo("300");
+
+        /* Add Items to List */
+        listItems.add(samsung);
+        for (int i = 0; i < 100; i++) {
+            listItems.add(samsung);  
+        }
+
+        /* Convert List to JRBeanCollectionDataSource */
+        JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listItems);
+        
+        try {
+            // Inicializamos los parametros a enviar
+//            Map parameters = getParameters();
+            Map parameters = new HashMap();
+            parameters.put("myDataSource", itemsJRBean);
+//            parameters.put("customerEmail", "rrhh@paracas.com.pe");
+//            parameters.put("invoiceAmount", amount);
+//            JasperReport report = JasperCompileManager.compileReport(
+//                    "C:\\Users\\USUARIO\\Documents\\reporte1.jrxml");
+            JasperReport report = (JasperReport) JRLoader.loadObject(new File(reporteFile));
+            JasperPrint print = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+//            JasperPrint print = JasperFillManager.fillReport(report, parameters, itemsJRBean);
+            // Exporta el informe a PDF
+            JasperExportManager.exportReportToPdfFile(print, reportePdf);
+            //Para visualizar el pdf directamente desde java
+            JasperViewer.viewReport(print, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
 }
